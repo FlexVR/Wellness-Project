@@ -5,4 +5,4 @@ port = 2691
 
 client = SimpleUDPClient(ip, port)  # Create client
 
-client.send_message("/EMS_TRIGGER", [1, 100, 55])  # Send message with int, float and string
+client.send_message("/EMS_CALIB", [1, 100, 55])  # Send message with int, float and string
