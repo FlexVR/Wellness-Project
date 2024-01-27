@@ -42,7 +42,8 @@ int beatAvg;
 void setup()
 {
   pinMode(2, OUTPUT);
-  //Serial.begin(115200);
+  digitalWrite(2, HIGH);
+  Serial.begin(115200);
   //Wire.begin(12, 13);
   BTSerial.begin("HEART-ESP32");
 
@@ -87,6 +88,8 @@ void loop()
   }
 
   BTSerial.println(beatAvg);
+  Serial.println(beatAvg);
+
   /*
   Serial.print("IR=");
   Serial.print(irValue);
@@ -95,7 +98,10 @@ void loop()
   Serial.print(", Avg BPM=");
   Serial.print(beatAvg);
 */
-  //if (irValue < 50000)
+  digitalWrite(2, HIGH);
+  if (irValue < 50000){
+    digitalWrite(2, LOW);
+  }
     //BTSerial.println(" No finger?");
 
   //Serial.println();
