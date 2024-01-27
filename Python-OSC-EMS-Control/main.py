@@ -3,10 +3,10 @@ from pythonosc import udp_client
 from pythonosc import osc_server
 import ast
 import serial
-import time
+import time as ti
 
 IP = "127.0.0.1" #OSC IP of application
-PORT = 2691 #OSC Port
+PORT = 2691 #OSC PortF
 
 f = open('stim_com.txt', 'r+')
 com = str(f.read())
@@ -15,8 +15,8 @@ f.close()
 
 COM_PORT = str('/dev/cu.SLAB_USBtoUART')#"/dev/cu.SLAB_USBtoUART" #COM port of EMS ESP32  /dev/cu.HEART-ESP32
 
-freq = 100 #STIM Frequency (in Hz)
-amplitude = 4 #STIM amplitude in mA (1-25mA)
+freq = 75 #STIM Frequency (in Hz)
+amplitude = 5 #STIM amplitude in mA (1-25mA)
 timec = 1 #STIM on time in sec
 calib_step = 0 #Calibration step for personal tollerance calibration
 
@@ -31,7 +31,7 @@ def stop_stim(address, *args):
     com.write(stop)
 
 def end_calib(address, *args):
-    global amplitude, freq, time #i dont like global vars but hackathon lel
+    global amplitude, freq, timec #i dont like global vars but hackathon lel
     amplitude = amplitude - (amplitude * 0.15)  # limit max to ensure comfort
 
 
@@ -69,7 +69,7 @@ def calib(address, *args):
     freq_command = f"FREQ 2 {freq}\r\n".encode()
     time_command = f'STIM 2 {timec} 0\r\n'.encode()
     sym_command = f'SYMM 0\r\n'.encode()
-    dur_command = f'DURN 300\r\n'.encode()
+    dur_command = f'DURN 400\r\n'.encode()
     denab_command = f'ENAB 2 0\r\n'.encode()
 
     com.write(enab_command)
@@ -78,7 +78,7 @@ def calib(address, *args):
     com.write(amplitude_command)
     com.write(freq_command)
     com.write(time_command)
-    time.sleep(timec)
+    ti.sleep(timec)
     com.write(denab_command)
 
 
@@ -114,7 +114,7 @@ def surge(address, *args):
             print('[WARN] FREQ OUT OF BOUNDS.')
 
         if timec > 7 or timec < 0.25:
-            time = 0.5
+            timec = 0.5
             print('[WARN] TIME OUT OF BOUNDS.')
 
         # Printing the values of the variables (DEBUG)
@@ -127,7 +127,7 @@ def surge(address, *args):
         freq_command = f"FREQ 2 {freq}\r\n".encode()
         time_command = f'STIM 2 {timec} 0\r\n'.encode()
         sym_command = f'SYMM 0\r\n'.encode()
-        dur_command = f'DURN 300\r\n'.encode()
+        dur_command = f'DURN 500\r\n'.encode()
         denab_command = f'ENAB 2 0\r\n'.encode()
 
         com.write(enab_command)
@@ -136,7 +136,7 @@ def surge(address, *args):
         com.write(amplitude_command)
         com.write(freq_command)
         com.write(time_command)
-        time.sleep(timec)
+        ti.sleep(timec)
         com.write(denab_command)
 
 

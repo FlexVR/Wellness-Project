@@ -20,11 +20,13 @@ ser.port = com
 ser.open()
 
 while True:
-  data_raw = ser.readline()
-  data_raw = data_raw.decode('utf-8').strip()
+  try:
+    data_raw = ser.readline()
+    data_raw = data_raw.decode('utf-8').strip()
 
-  # Extract integers from the string
-  data = int(''.join(filter(str.isdigit, data_raw)))
-  client.send_message("/HEART", data)  # Send message with int, float and string
-  print("Heart Rate AVG: ", data_raw)
-
+    # Extract integers from the string
+    data = int(''.join(filter(str.isdigit, data_raw)))
+    client.send_message("/HEART", data)  # Send message with int, float and string
+    print("Heart Rate AVG: ", data_raw)
+  except:
+    print('[ERROR] Hardware loss, retrying...')
