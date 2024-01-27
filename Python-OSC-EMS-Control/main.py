@@ -15,8 +15,8 @@ f.close()
 
 COM_PORT = str('/dev/cu.SLAB_USBtoUART')#"/dev/cu.SLAB_USBtoUART" #COM port of EMS ESP32  /dev/cu.HEART-ESP32
 
-freq = 90 #STIM Frequency (in Hz)
-amplitude = 5 #STIM amplitude in mA (1-25mA)
+freq = 100 #STIM Frequency (in Hz)
+amplitude = 4 #STIM amplitude in mA (1-25mA)
 timec = 1 #STIM on time in sec
 calib_step = 0 #Calibration step for personal tollerance calibration
 
