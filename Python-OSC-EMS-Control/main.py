@@ -33,17 +33,19 @@ def calib(address, *args):
 
         # Unpacking the processed values
         calib_step = int(processed_values)
-        
+
         if calib_step != 0:
             amplitude = int(calib_step) * 2.5
         else:
             amplitude = 1
         calib_step += 1
 
+        amplitude = float(amplitude)
+
         if calib_step == 10:
             calib_step = 0
+            amplitude = amplitude - (amplitude * 0.15) #limit max to ensure comfort
 
-        amplitude = float(amplitude)
         if amplitude > 25 or amplitude < 1:
             amplitude = 1
             print('[WARN] AMPL VALUE OUT OF BOUNDS.')
@@ -89,7 +91,7 @@ def surge(address, *args):
             print('[WARN] FREQ OUT OF BOUNDS.')
 
         if time > 7 or time < 0.25:
-            time = 1
+            time = 0.5
             print('[WARN] TIME OUT OF BOUNDS.')
 
         # Printing the values of the variables (DEBUG)
