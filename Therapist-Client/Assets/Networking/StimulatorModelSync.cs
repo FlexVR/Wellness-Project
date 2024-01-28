@@ -9,6 +9,9 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
 {
 
     [SerializeField]
+    private HolographGraphController graph;
+
+    [SerializeField]
     private Button stimbutton;
 
     [SerializeField]
@@ -103,6 +106,8 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
         if (!this.IsPatient) {
             stimbutton = GameObject.Find("StimButton").GetComponent<Button>();
             stimbutton.onClick.AddListener(this.ToggleStim);
+
+            graph = GameObject.Find("HRGraph").GetComponent<HolographGraphController>();
         }
     }
 
