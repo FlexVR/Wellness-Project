@@ -9,11 +9,11 @@ IP = "127.0.0.1" #OSC IP of application
 PORT = 2691 #OSC PortF
 
 f = open('stim_com.txt', 'r+')
-com = str(f.read())
+com_port = str(f.read())
 f.close()
 
-
-COM_PORT = str('/dev/cu.SLAB_USBtoUART')#"/dev/cu.SLAB_USBtoUART" #COM port of EMS ESP32  /dev/cu.HEART-ESP32
+#debug stuff this can be changed
+COM_PORT = com_port #str('/dev/cu.SLAB_USBtoUART')#"/dev/cu.SLAB_USBtoUART" #COM port of EMS ESP32  /dev/cu.HEART-ESP32
 
 freq = 75 #STIM Frequency (in Hz)
 amplitude = 5 #STIM amplitude in mA (1-25mA)
@@ -34,6 +34,15 @@ def end_calib(address, *args):
     global amplitude, freq, timec #i dont like global vars but hackathon lel
     amplitude = amplitude - (amplitude * 0.15)  # limit max to ensure comfort
 
+def restart_calib(address, *args):
+    global calib_step, freq, amplitude, timec
+    calib_step = 0
+    freq = 75  # STIM Frequency (in Hz)
+    amplitude = 5  # STIM amplitude in mA (1-25mA)
+    timec = 1  # STIM on time in sec
+    calib_step = 0  # Calibration step for personal tollerance calibration
+    stop_command = f'STOP 2\r\n'.encode()
+    com.write(stop_command)
 
 def calib(address, *args):
     global amplitude, freq, timec, calib_step
@@ -73,10 +82,15 @@ def calib(address, *args):
     denab_command = f'ENAB 2 0\r\n'.encode()
 
     com.write(enab_command)
+    ti.sleep(0.01)
     com.write(sym_command)
+    ti.sleep(0.01)
     com.write(dur_command)
+    ti.sleep(0.01)
     com.write(amplitude_command)
+    ti.sleep(0.01)
     com.write(freq_command)
+    ti.sleep(0.01)
     com.write(time_command)
     ti.sleep(timec)
     com.write(denab_command)
@@ -131,10 +145,15 @@ def surge(address, *args):
         denab_command = f'ENAB 2 0\r\n'.encode()
 
         com.write(enab_command)
+        ti.sleep(0.01)
         com.write(sym_command)
+        ti.sleep(0.01)
         com.write(dur_command)
+        ti.sleep(0.01)
         com.write(amplitude_command)
+        ti.sleep(0.01)
         com.write(freq_command)
+        ti.sleep(0.01)
         com.write(time_command)
         ti.sleep(timec)
         com.write(denab_command)
@@ -145,14 +164,16 @@ def surge(address, *args):
 
 
 dispatcher = Dispatcher()
-dispatcher.map("/EMS_TRIGGER/*", surge)
+dispatcher.map("/EMS_TRIGGER/*", surge) #amp freq time
 dispatcher.set_default_handler(surge)
-dispatcher.map("/EMS_CALIB/*", calib)
+dispatcher.map("/EMS_CALIB/*", calib) #any int
 dispatcher.set_default_handler(calib)
-dispatcher.map("/END_CALIB/*", calib)
+dispatcher.map("/END_CALIB/*", calib) #anything
 dispatcher.set_default_handler(end_calib)
-dispatcher.map("/STOP/*", calib)
+dispatcher.map("/STOP/*", calib) #anything
 dispatcher.set_default_handler(stop_stim)
+dispatcher.map("/RESTART/*", restart_calib) #anything
+dispatcher.set_default_handler(restart_calib)
 
 com = serial.Serial(port=COM_PORT, baudrate=115200) #init communication with EMS
 
