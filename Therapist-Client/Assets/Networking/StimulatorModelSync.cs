@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
 {
+
+    [SerializeField]
+    private Button stimbutton;
 
     [SerializeField]
     private bool IsPatient = false;
@@ -38,13 +42,25 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
 
         if (currentModel != null) {
             if (IsPatient) {
-                currentModel.stimulation_onDidChange += (model, value) => {onStimulationSwitched?.Invoke(value);};
-                currentModel.frequencyDidChange += (model, value) => {onFreqUpdated?.Invoke(value);};
-                currentModel.on_secondsDidChange += (model, value) => {onDurationUpdated?.Invoke(value);};
+                currentModel.stimulation_onDidChange += (model, value) => {
+                    Debug.Log("Stim on: " + value);
+                    onStimulationSwitched?.Invoke(value);
+                    };
+                currentModel.frequencyDidChange += (model, value) => {
+                    Debug.Log("Freq: " + value);
+                    onFreqUpdated?.Invoke(value);
+                    };
+                currentModel.on_secondsDidChange += (model, value) => {
+                    Debug.Log("Duration: " + value);
+                    onDurationUpdated?.Invoke(value);
+                    };
             }
 
             if (!IsPatient) {
-                currentModel.heartrate_bpmDidChange += (model, value) => {HeartbeatUpdated?.Invoke(value);};
+                currentModel.heartrate_bpmDidChange += (model, value) => {
+                    Debug.Log("BPM: " + value);
+                    HeartbeatUpdated?.Invoke(value);
+                    };
             }
         }
     } 
@@ -84,12 +100,29 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!this.IsPatient) {
+            stimbutton = GameObject.Find("StimButton").GetComponent<Button>();
+            stimbutton.onClick.AddListener(this.ToggleStim);
+        }
     }
 
+    public void LogInt(int val) {
+        Debug.Log(val);
+    }
+
+    public void ToggleStim() {
+        Debug.Log("You clicked the button");
+        if (this.IsOn()) {
+            SetStimulationOn(false);
+        }
+
+        else {
+            SetStimulationOn(true);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
