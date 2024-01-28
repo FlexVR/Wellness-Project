@@ -6,7 +6,7 @@ IP = str(f.read())
 f.close()
 
 #IP = "127.0.0.1"
-PORT = 2691
+PORT = 9000
 
 client = SimpleUDPClient(IP, PORT)  # Create client
 

@@ -16,8 +16,8 @@ f.close()
 COM_PORT = com_port #str('/dev/cu.SLAB_USBtoUART')#"/dev/cu.SLAB_USBtoUART" #COM port of EMS ESP32  /dev/cu.HEART-ESP32
 
 freq = 75 #STIM Frequency (in Hz)
-amplitude = 5 #STIM amplitude in mA (1-25mA)
-timec = 1 #STIM on time in sec
+amplitude = 1 #STIM amplitude in mA (1-25mA)
+timec = 0.8 #STIM on time in sec
 calib_step = 0 #Calibration step for personal tollerance calibration
 
 def print_handler(address, *args):
@@ -38,7 +38,7 @@ def restart_calib(address, *args):
     global calib_step, freq, amplitude, timec
     calib_step = 0
     freq = 75  # STIM Frequency (in Hz)
-    amplitude = 5  # STIM amplitude in mA (1-25mA)
+    amplitude = 1  # STIM amplitude in mA (1-25mA)
     timec = 1  # STIM on time in sec
     calib_step = 0  # Calibration step for personal tollerance calibration
     stop_command = f'STOP 2\r\n'.encode()
@@ -48,8 +48,8 @@ def calib(address, *args):
     global amplitude, freq, timec, calib_step
 
    # try:
-    input_tuple = ast.literal_eval(str(args))
-    calib_step = input_tuple[0]
+ #   input_tuple = ast.literal_eval(str(args))
+  #  calib_step = input_tuple[0]
     # Unpacking the processed values
 
 
@@ -166,9 +166,9 @@ def surge(address, *args):
 dispatcher = Dispatcher()
 dispatcher.map("/EMS_TRIGGER/*", surge) #amp freq time
 dispatcher.set_default_handler(surge)
-dispatcher.map("/EMS_CALIB/*", calib) #any int
+dispatcher.map("/EMS_CALIB/*", calib) #anything
 dispatcher.set_default_handler(calib)
-dispatcher.map("/END_CALIB/*", calib) #anything
+dispatcher.map("/END_CALIB/*", end_calib) #anything
 dispatcher.set_default_handler(end_calib)
 dispatcher.map("/STOP/*", calib) #anything
 dispatcher.set_default_handler(stop_stim)

@@ -5,7 +5,7 @@ port = 2691
 calib = 0
 client = SimpleUDPClient(ip, port)  # Create client
 
-client.send_message("/EMS_TRIGGER/*", [2, 100, 1])
+client.send_message("/EMS_TRIGGER/*", [2, 100, 0.8])
 
 while True:  #debug code
     print(f"Step: {calib}")
