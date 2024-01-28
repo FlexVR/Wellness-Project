@@ -2895,11 +2895,11 @@ PrefabInstance:
     - target: {fileID: 114568985850100520, guid: fca9d4afb3743274e8f7da14019d7e0b, type: 3}
       propertyPath: _localPlayer.head
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1699434544}
     - target: {fileID: 114568985850100520, guid: fca9d4afb3743274e8f7da14019d7e0b, type: 3}
       propertyPath: _localPlayer.root
       value: 
-      objectReference: {fileID: 1699434544}
+      objectReference: {fileID: 2089110259}
     - target: {fileID: 114568985850100520, guid: fca9d4afb3743274e8f7da14019d7e0b, type: 3}
       propertyPath: _localPlayer.leftHand
       value: 
@@ -4747,6 +4747,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056942514}
   m_CullTransparentMesh: 1
+--- !u!4 &2089110259 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2351505566903569412, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
+  m_PrefabInstance: {fileID: 782628375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2100425381
 GameObject:
   m_ObjectHideFlags: 0
