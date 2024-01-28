@@ -16,6 +16,9 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
     private string NameOfHeartRateObj;
 
     [SerializeField]
+    private Button startbtn;
+
+    [SerializeField]
     private HolographGraphController graph;
 
     [SerializeField]
@@ -128,6 +131,9 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
 
             resetbutton = GameObject.Find("ResetBtn").GetComponent<Button>();
             resetbutton.onClick.AddListener(this.TriggerReset);
+
+            startbtn = GameObject.Find("StartBtn").GetComponent<Button>();
+            startbtn.interactable = false;
             //graph = GameObject.Find("HRGraph").GetComponent<HolographGraphController>();
         }
 
@@ -138,6 +144,10 @@ public class StimulatorModelSync : RealtimeComponent<StimulatorModel>
         }
     }
 
+    void OnDestroy() {
+        startbtn.interactable = true;
+    }
+    
     public void LogInt(int val) {
         Debug.Log(val);
     }
