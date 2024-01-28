@@ -343,35 +343,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 95759718}
-  - component: {fileID: 95759717}
+  - component: {fileID: 95759719}
   m_Layer: 0
-  m_Name: OSCHandle
+  m_Name: OSCReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &95759717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 95759716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31b433bc4acd2c848a34f71ebc0f3e17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Sender: {fileID: 0}
-  m_Address: /
-  m_Object: {fileID: 95759716}
-  m_SourceComponent: {fileID: 0}
-  m_MemberIsProperty: 0
-  m_PropertyName: 
-  m_PropertyTypeName: 
-  m_SendVector2Elements: 0
-  m_SendVector3Elements: 0
 --- !u!4 &95759718
 Transform:
   m_ObjectHideFlags: 0
@@ -387,6 +366,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &95759719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95759716}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Port: 9000
 --- !u!1 &96338189
 GameObject:
   m_ObjectHideFlags: 0
