@@ -68,7 +68,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7281be8748b698f448111f4050704802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NameOfHeartRateObj: 
+  graph: {fileID: 0}
   stimbutton: {fileID: 0}
+  resetbutton: {fileID: 0}
+  temp: 2
   IsPatient: 0
   onFreqUpdated:
     m_PersistentCalls:
